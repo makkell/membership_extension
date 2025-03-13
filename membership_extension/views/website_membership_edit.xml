@@ -2,6 +2,10 @@
     <!-- убрал отображение городов -->
     <template id="website_membership.opt_index_country" name="Location"
         inherit_id="website_membership.index">
+        <xpath expr="//div[@id='left_column']/ul[1]/li[1]" position="replace">
+            <li class="nav-header nav-item"><h3>Группы</h3></li>
+        </xpath>
+        
         <xpath expr="//div[@id='left_column']/ul[1]" position="after">
             <h3>Теги пользователей</h3>
             <t t-set = "unique_tags" t-value = "[]"/>
