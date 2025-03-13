@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="mklab_additfields">
+      <field name="name">Дополнительные поля модуля mklab_web_addit_fields</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='vat']" position="before">
+                    <field name="people_spec"/>
+                    <field name="people_custom_spec"/>
+                    <field name="education"/>
+                    <field name="telegram"/>
+         </xpath>
+      </field>
+    </record>
+      <record model="ir.ui.view" id="mklab_res_partner_kanban_view">
+      <field name="name">Изменения канбан-представления res.partner</field>
+      <field name="type">kanban</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+      <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_kanban_details')]/div" position="replace">
+                <div>
+                        <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
+                        <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                        <ul>
+                            <li t-if="record.parent_id.raw_value and !record.function.raw_value"><field name="parent_id"/></li>
+                            <li t-if="record.city.raw_value or record.country_id.raw_value">
+                                <t t-if="record.city.raw_value"><field name="city"/><t t-if="record.country_id.raw_value">, </t></t>
+                                <t t-if="record.country_id.raw_value"><field name="country_id"/></t>
+                            </li>
+                            <li t-if="record.email.raw_value" class="o_text_overflow"><field name="email"/></li>
+                        </ul>
+                        <div class="o_row">
+                            <span class="oe_kanban_partner_links"/>
+                        </div>
+                </div>
+            </xpath>
+      </field>
+    </record>
+      <record id="mklab_web_addit_fields.res_partner_speciality_view_form" model="ir.ui.view">
+            <field name="name">res.partner.speciality.form</field>
+            <field name="model">res.partner.speciality</field>
+            <field name="arch" type="xml">
+                <form name="speciality">
+                    <sheet>
+                        <group>
+                            <group string="Специальность">
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="mklab_web_addit_fields.res_partner_speciality_view_tree" model="ir.ui.view">
+            <field name="name">res.partner.speciality.tree</field>
+            <field name="model">res.partner.speciality</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+  </data>
+</odoo>

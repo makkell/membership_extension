@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_additional_fields_0" inherit_id="portal.portal_my_details_fields">
+            <xpath expr="//div[3]" position="replace">
+                <label class="col-form-label" for="name">ФИО</label>
+            </xpath>
+            <xpath expr="//div[4]" position="after">
+                <xpath expr="//div[9]" position="move"/>
+            </xpath>
+            <!-- <xpath expr="//div[9]" position="attributes">    
+               <attribute name="style">display:none</attribute>
+            </xpath>
+            <xpath expr="//div[10]" position="attributes">
+               <attribute name="style">display:none</attribute>
+            </xpath>
+            <xpath expr="//div[11]" position="attributes">
+               <attribute name="style">display:none</attribute>
+            </xpath> -->
+            <xpath expr="//div[12]" position="replace">
+            </xpath>
+            <xpath expr="//div[hasclass('col-12')]" position="before">
+                       <div class="form-group mb-1 col-xl-6">
+                           <label class="col-form-label label-optional" for="people_spec">Специальность</label>
+                           <select name="people_spec" t-attf-class="form-control form-select #{error.get('people_spec') and 'is-invalid' or ''}">
+                                    <t t-foreach="people_spec_vals or []" t-as="rf">
+                                        <option t-att-value="rf.id" t-att-selected="rf.id == int(people_spec) if people_spec else rf.id == partner.people_spec.id">
+                                            <t t-esc="rf.name" />
+                                        </option>
+                                    </t>
+                            </select>
+                        </div>
+                        <div class="form-group mb-1 col-xl-6">
+                           <label class="col-form-label label-optional" for="people_custom_spec">Специализация</label>
+                           <input class="form-control" type="text" name="people_custom_spec"  t-att-value="partner.people_custom_spec"/>
+                        </div>
+                        <div class="form-group mb-1 col-xl-6">
+                           <label class="col-form-label label-optional" for="education">Образование</label>
+                           <input class="form-control" type="text" name="education"  t-att-value="partner.education"/>
+                        </div>
+                        <div class="form-group mb-1 col-xl-6">
+                           <label class="col-form-label label-optional" for="telegram">Телеграмм</label>
+                           <input class="form-control" type="text" name="telegram"  t-att-value="partner.telegram"/>
+                        </div>
+            </xpath>
+    </template>
+    <template id="website_additional_fields_1" inherit_id="website_partner.partner_detail">
+            <xpath expr="//div[hasclass('o_wcrm_contact_details')]/div" position="after">
+                <div class="row">
+                    <div class="col-2">
+                        <p>Специальность: </p>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-0" t-field="partner.people_spec" style="font-size: 16px"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <p>Специализация: </p>
+                    </div>
+                        <div class="col-6">
+                        <p class="mb-0" t-field="partner.people_custom_spec" style="font-size: 16px"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">                
+                        <p>Образование: </p>
+                    </div>
+                        <div class="col-6">
+                        <p class="mb-0" t-field="partner.education" style="font-size: 16px"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <p>Телеграмм: </p>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-0" t-field="partner.telegram" style="font-size: 16px"></p>
+                    </div>
+                </div>
+            </xpath>
+    </template>
+    <template id="contact_name" inherit_id="base.contact_name">
+        <xpath expr="//div" position="replace">
+            <div t-if="'avatar' in fields" class="m-1 d-inline-block">
+                <span t-field="object.image_128" t-options='{"widget": "image", "style": "object-fit: cover; border-radius: 50%; width: 50px; height: 50px;"}'/>
+            </div>
+            <div t-if="'name' in fields" class="d-inline-block">
+                <t t-if="object.name">
+                    <span itemprop="name" t-esc="name"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+    <!-- <template id="portal_layout" inherit_id="portal.portal_layout">
+        <xpath expr="//div[@t-field='user_id.partner_id']" position="replace">
+            <div t-field="user_id.partner_id" t-options='{"widget": "contact", "fields": ["avatar", "email", "phone", "address", "name"]}'/>
+        </xpath>
+    </template> -->
+    <template id="portal_my_details" inherit_id="portal.portal_my_details_fields">
+        <xpath expr="//div[@class='col-lg-12']" position="after">
+            <div class="col-lg-9">
+                Аватар:
+            </div>
+            <div class="col-lg-3">
+                <img class="mb-3" t-att-src="website.image_url(partner, 'image_128')" style="object-fit: cover; border-radius: 50%; width: 128px; height: 128px;"/>
+                <input type="file" name="image_1920" accept="image/*"/>
+            </div>
+        </xpath>
+    </template>
+
+     <template id="portal_my_details_form" inherit_id="portal.portal_my_details">
+        <xpath expr="//form" position="attributes">
+            <attribute name="enctype">multipart/form-data</attribute>
+        </xpath>
+    </template>
+</odoo>

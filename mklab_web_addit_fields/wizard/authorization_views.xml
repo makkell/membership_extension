@@ -1,0 +1,38 @@
+<odoo>
+	<data>
+
+		<record id="rekassa.form" model="ir.ui.view">
+		    <field name="name">rekassa.wizardform</field>
+		    <field name="model">rekassa.wizardauth</field>
+		    <field name="arch" type="xml">
+		        <form string="Авторизация. Введите логин и пароль">
+		            <group class="oe_title" string="Введите логин и пароль от сервиса reKassa" attrs="{'invisible':[('show_text','=',True)]}">
+                        <field name="many_kassa_id" invisible='1'/>
+						<field name="show_text" invisible='1'/>
+						<field name="address"/>
+						<field name="apiKey"/>
+						<field name="login" attrs="{'invisible':[('show_text','=',True)]}"/>
+                        <field name="password" attrs="{'invisible':[('show_text','=',True)]}"/>
+		            </group>
+						<field name="text_message" attrs="{'invisible':[('show_text','=',False)]}"/>
+		            <footer>
+		                <button name="get_auth" string="Ок" type="object" class="btn-primary" attrs="{'invisible':[('show_text','=',True)]}"/>
+						<button name="update_journals" string="Использовать существующие данные" type="object" class="btn-primary" attrs="{'invisible':[('show_text','=',False)]}"/>
+						<button name="update_auth_and_journals" string="Обновить данные во всех журналах с этим Серийным номером" type="object" class="btn-primary" attrs="{'invisible':[('show_text','=',False)]}"/>
+		                <button string="Отмена" class="btn-secondary" special="cancel"/>
+		            </footer>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="rekassa.action_auth_wizard" model="ir.actions.act_window">
+		    <field name="name">Авторизация</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">rekassa.wizardauth</field>
+		    <field name="view_mode">form</field>
+		    <field name="view_id" ref="rekassa.form"/>
+		    <field name="target">new</field>
+		</record>
+		
+	</data>
+</odoo>

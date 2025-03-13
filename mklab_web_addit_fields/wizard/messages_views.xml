@@ -1,0 +1,27 @@
+<odoo>
+	<data>
+
+		<record id="rekassa.form_message" model="ir.ui.view">
+		    <field name="name">rekassa.wizardform</field>
+		    <field name="model">rekassa.wizardmessages</field>
+		    <field name="arch" type="xml">
+		        <form>
+		                <field name="message_text"/>
+		            <footer>
+		                <button string="OK" class="btn-secondary" special="cancel"/>
+		            </footer>
+		        </form>
+		    </field>
+		</record>
+
+		<record id="rekassa.action_message_wizard" model="ir.actions.act_window">
+		    <field name="name">Авторизация</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="res_model">rekassa.wizardmessages</field>
+		    <field name="view_mode">form</field>
+		    <field name="view_id" ref="rekassa.form_message"/>
+		    <field name="target">new</field>
+		</record>
+		
+	</data>
+</odoo>
