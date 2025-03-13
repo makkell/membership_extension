@@ -22,9 +22,6 @@
         "views/membership_views.xml",
         "views/product_template_view.xml",
         "views/res_partner_view.xml",
-        "views/lots_of_page.xml",
-        "views/website_membership_edit.xml",
-        
         "data/membership_category_data.xml",
     ],
     "demo": [
