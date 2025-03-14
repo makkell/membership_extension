@@ -24,6 +24,7 @@ Long description of module's purpose
     'data': [
         # 'security/ir.model.access.csv',
         "views/website_membership_edit.xml",
+        "views/membership_category_view.xml",
     ],
     # only loaded in demonstration mode
     'demo': [

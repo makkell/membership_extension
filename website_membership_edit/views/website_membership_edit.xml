@@ -2,8 +2,19 @@
     <!-- убрал отображение городов -->
     <template id="website_membership.opt_index_country" name="Location"
         inherit_id="website_membership.index">
-        <xpath expr="//div[@id='left_column']/ul[1]/li[1]" position="replace">
-            <li class="nav-header nav-item"><h3>Группы</h3></li>
+        <xpath expr="//div[@id='left_column']/ul[1]" position="after">
+            <ul class="nav nav-pills flex-column mt16">
+                    <li class="nav-header nav-item"><h3>Группы</h3></li>
+                    <li class="nav-item"><a href="/members" class="nav-link#{'' if membership_id else ' active'}">All</a></li>
+                    <t t-foreach="memberships_data" t-as="membership_data">
+                        <li class="nav-item">
+                            <a t-attf-href="#{membership_data['url']}"
+                                t-attf-class="nav-link#{membership_id and membership_data['id'] == membership_id and ' active' or ''}">
+                                <t t-esc="membership_data['name']"/>
+                                </a>
+                        </li>
+                    </t>
+                </ul>
         </xpath>
         
         <xpath expr="//div[@id='left_column']/ul[1]" position="after">

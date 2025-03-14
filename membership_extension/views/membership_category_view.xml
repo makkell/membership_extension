@@ -1,6 +1,3 @@
-
-<!-- Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
 <odoo>
     <record id="membership_category_action" model="ir.actions.act_window">
         <field name="name">Membership Categories</field>

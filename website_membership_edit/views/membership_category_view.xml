@@ -1,0 +1,14 @@
+<odoo>
+    <record id="membership_extension.membership_category_tree_view" model="ir.ui.view">
+        <field name="name">Membership Categories</field>
+        <field name="model">membership.membership_category</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name = "url" />
+            </tree>
+        </field>
+    </record>
+   
+</odoo>

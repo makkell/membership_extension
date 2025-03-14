@@ -1,19 +1,26 @@
 # -*- coding: utf-8 -*-
 
-# from odoo import models, fields, api
+from odoo import models, fields, api
+from odoo.addons.http_routing.models.ir_http import slug
 
+class MembershipCategory(models.Model):
+    _name = 'membership.membership_category'
+    name =  fields.Char(required=True, translate = True )
+    company_id = fields.Many2one("res.company")
+    view_id = fields.Char()
+    url = fields.Char()
 
-# class website_membership_edit(models.Model):
-#     _name = 'website_membership_edit.website_membership_edit'
-#     _description = 'website_membership_edit.website_membership_edit'
-
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
-
+    def create_unique_xml_web(self):
+        for web in self:
+            page_result = self.env['website'].sudo().new_page(
+                name=f'{self.name} {self.name}', template="website_membership.index",
+                add_menu=False, ispage=False)
+            url = f"/members/{slug(self)}/page{page_result['url']}"
+            web.view_id = page_result['view_id']
+            web.url = url
+    
+    def create(self, vals_list):
+        web_xml = super().create(vals_list)
+        web_xml.create_unique_xml_web()
+        return web_xml
+    
