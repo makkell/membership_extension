@@ -13,7 +13,7 @@ class MembershipCategory(models.Model):
     def create_unique_xml_web(self):
         for web in self:
             page_result = self.env['website'].sudo().new_page(
-                name=f'{self.name} {self.name}', template="website_membership.index",
+                name=f'{self.name} {self.name}', template="website_membership_edit.page",
                 add_menu=False, ispage=False)
             url = f"/members/{slug(self)}/page{page_result['url']}"
             web.view_id = page_result['view_id']

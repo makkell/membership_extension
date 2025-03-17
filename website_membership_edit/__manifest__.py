@@ -18,13 +18,14 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ["membership", "website_membership"],
+    'depends': ["membership", "website_membership", "membership_extension", "mklab_web_addit_fields"],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         "views/website_membership_edit.xml",
         "views/membership_category_view.xml",
+        "views/website_membership_page.xml",
     ],
     # only loaded in demonstration mode
     'demo': [

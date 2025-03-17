@@ -221,10 +221,10 @@ class WebMembmerShipFilterTags(WebsiteMembership):
         }
 
         if '.' not in web_page:
-            web_page = 'website_membership.%s' % web_page
+            web_page = 'website_membership_edit.%s' % web_page
         # Every event page view should have its own SEO.
             values['seo_object'] = request.website.get_template(web_page)
-            values['main_object'] = membership
+            
 
         return request.render(web_page, values)
 

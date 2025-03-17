@@ -2,21 +2,23 @@
     <!-- убрал отображение городов -->
     <template id="website_membership.opt_index_country" name="Location"
         inherit_id="website_membership.index">
-        <xpath expr="//div[@id='left_column']/ul[1]" position="after">
+        <xpath expr="//div[@id='left_column']/ul[1]" position="replace">
             <ul class="nav nav-pills flex-column mt16">
                     <li class="nav-header nav-item"><h3>Группы</h3></li>
                     <li class="nav-item"><a href="/members" class="nav-link#{'' if membership_id else ' active'}">All</a></li>
                     <t t-foreach="memberships_data" t-as="membership_data">
-                        <li class="nav-item">
-                            <a t-attf-href="#{membership_data['url']}"
-                                t-attf-class="nav-link#{membership_id and membership_data['id'] == membership_id and ' active' or ''}">
-                                <t t-esc="membership_data['name']"/>
+                        <t t-if = "membership_data['name'] != 'Free Members' and membership_data['name'] != 'Бесплатные участники'"> 
+                            <li class="nav-item">
+                                <a t-attf-href="#{membership_data['url']}"
+                                    t-attf-class="">
+                                    <t t-esc="membership_data['name']"/>
                                 </a>
-                        </li>
+                            </li>
+                        </t>
                     </t>
                 </ul>
         </xpath>
-        
+
         <xpath expr="//div[@id='left_column']/ul[1]" position="after">
             <h3>Теги пользователей</h3>
             <t t-set = "unique_tags" t-value = "[]"/>
@@ -49,9 +51,11 @@
                 </button>
             </div>
         </xpath>
+
+
     </template>
 
-    <!-- убрал free member из каталога -->
+    <!-- убрал free member из каталога
     <template id="member_del" inherit_id = "website_membership.index">
         <xpath expr="//div[hasclass('col-lg-3')]/ul/t" position="replace">
             <t t-foreach="memberships_data" t-as="membership_data">
@@ -64,7 +68,7 @@
                 </t>
             </t>
         </xpath>
-    </template>
+    </template> -->
 
     <!-- убрал free member из списка -->
     <template id="member_del_list"  inherit_id = "website_membership.index">
@@ -123,7 +127,7 @@
     </xpath>
 </template>
 
-<!-- изменение структуры краточки участника -->
+<!-- изменение структуры страницы-->
 
 <template id="website_partner.partner_detail" name="Partner Details">
     <div class="row">
