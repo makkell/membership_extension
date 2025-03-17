@@ -30,12 +30,14 @@ class WebMembmerShipFilterTags(WebsiteMembership):
         '/members/association/<membership_id>/country/<int:country_id>',
         '/members/association/<membership_id>/country/<country_name>-<int:country_id>/page/<int:page>',
         '/members/association/<membership_id>/country/<int:country_id>/page/<int:page>',
-        '/members/memberships/<membership_id>/tags/<int:tag_id>'
+        '/members/memberships/<membership_id>/tags/<int:tag_id>',
+        '/members/<model("membership.membership_category"):membership>/page/<path:web_page>'
     ], type='http', auth="public", website=True, sitemap=True)
     def members(self, membership_id=None, country_name=None, country_id=0, page=1, **post):
         response = super().members(membership_id, country_name, country_id, page=1)
         tag_id = post.get('tag_id')
         tag_arr = self.tags_arr
+        web_page = post.get("web_page") or None
         for tag_id in tag_arr:
             if tag_id:
                 partner_values = response.qcontext.get('partners').values()
@@ -65,7 +67,13 @@ class WebMembmerShipFilterTags(WebsiteMembership):
                 membership_data_final.append(record)
 
         response.qcontext['memberships_data'] = membership_data_final
-
+        print(response.qcontext)
+        print('web_page ', web_page)
+        if web_page:
+            if '.' not in web_page: web_page = 'website_membership_edit.%s' % web_page
+            return request.render(web_page, response.qcontext)
+        
+        return response
 
         print(response.qcontext)
         return response
@@ -89,9 +97,9 @@ class WebMembmerShipFilterTags(WebsiteMembership):
         self.tags_arr.clear()
         return request.redirect('/members')
     
-    @http.route(['''/members/<model("membership.membership_category"):membership>/page/<path:web_page>'''], 
-                type='http', auth="public", website=True, sitemap=False)
-    def event_page(self, membership, web_page, membership_id=None, country_name=None, country_id=0, page=1, **post):
+    # @http.route(['''/members/<model("membership.membership_category"):membership>/page/<path:web_page>'''], 
+    #             type='http', auth="public", website=True, sitemap=False)
+    # def event_page(self, membership, web_page, membership_id=None, country_name=None, country_id=0, page=1, **post):
         Product = request.env['product.product']
         Country = request.env['res.country']
         MembershipLine = request.env['membership.membership_line']
@@ -224,7 +232,7 @@ class WebMembmerShipFilterTags(WebsiteMembership):
             web_page = 'website_membership_edit.%s' % web_page
         # Every event page view should have its own SEO.
             values['seo_object'] = request.website.get_template(web_page)
-            
+            values['main_object'] = membership
 
         return request.render(web_page, values)
 
